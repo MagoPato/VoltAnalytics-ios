@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "name": "VoltAnalytics",
+    "slug": "volt-analytics",
+    "version": "1.0.0",
+    "orientation": "default",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "com.magopato.voltanalytics",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
+      }
+    }
+  }
+}
