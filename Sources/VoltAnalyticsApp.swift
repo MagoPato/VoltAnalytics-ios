@@ -33,6 +33,7 @@ final class WebModel: NSObject, ObservableObject, WKNavigationDelegate, WKUIDele
         webView.isOpaque = false
         webView.backgroundColor = UIColor(red: 11 / 255, green: 15 / 255, blue: 16 / 255, alpha: 1)
         webView.scrollView.backgroundColor = webView.backgroundColor
+        webView.scrollView.contentInsetAdjustmentBehavior = .never // sin hueco abajo
         if #available(iOS 16.4, *) { webView.isInspectable = true }
 
         let refresh = UIRefreshControl()
@@ -128,6 +129,7 @@ struct ContentView: View {
         ZStack {
             BG.ignoresSafeArea()
             WebView(model: model)
+                .ignoresSafeArea(.container, edges: .bottom) // la web llega hasta el borde inferior
 
             if let err = model.errorText {
                 BG.ignoresSafeArea()
