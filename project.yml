@@ -1,4 +1,4 @@
-﻿name: VoltAnalytics
+name: VoltAnalytics
 options:
   bundleIdPrefix: com.magopato
   deploymentTarget:
