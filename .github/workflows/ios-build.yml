@@ -5,6 +5,9 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: write
+
 jobs:
   build-ios:
     runs-on: macos-15
@@ -59,3 +62,11 @@ jobs:
           name: ipa-sin-firmar
           path: app-sin-firmar.ipa
           retention-days: 14
+
+      - name: Publicar en Releases (descarga directa)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: VoltAnalytics (última compilación)
+          files: app-sin-firmar.ipa
+          make_latest: true
