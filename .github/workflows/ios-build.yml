@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ios-build
+  cancel-in-progress: true
+
 jobs:
   build-ios:
     runs-on: macos-15
@@ -70,3 +74,4 @@ jobs:
           name: VoltAnalytics (última compilación)
           files: app-sin-firmar.ipa
           make_latest: true
+          overwrite_files: true
