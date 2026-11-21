@@ -4,3 +4,5 @@ Sources/Info.plist
 ipa/
 *.ipa
 Payload/
+icon/
+logo-original.png
