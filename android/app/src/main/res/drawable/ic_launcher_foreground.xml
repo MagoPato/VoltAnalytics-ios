@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Logo de VoltAnalytics (230x208 original), centrado y escalado al ~65% de la zona visible -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <group android:scaleX="0.3265" android:scaleY="0.3265" android:translateX="11.39" android:translateY="23.47">
+        <path android:fillColor="@color/icon_logo_top" android:pathData="M164,20 L122,92 L113,96 L103,75 L80,109 L64,109 L64,115 L84,115 L103,87 L107,92 L112,106 L140,91 L142,92 L144,103 L164,87 L164,85 L152,82 Z" />
+        <path android:fillColor="@color/icon_logo_bottom" android:pathData="M197,70 L133,124 L132,105 L118,114 L123,167 Z" />
+    </group>
+</vector>

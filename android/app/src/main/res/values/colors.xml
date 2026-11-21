@@ -1,0 +1,8 @@
+<resources>
+    <color name="app_bg">#0B0F10</color>
+    <color name="accent">#2B8A83</color>
+    <!-- Icono (versión clara) -->
+    <color name="icon_bg">#F7F9F8</color>
+    <color name="icon_logo_top">#2B8A83</color>
+    <color name="icon_logo_bottom">#06525C</color>
+</resources>

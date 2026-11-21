@@ -1,0 +1,66 @@
+name: Compilar APK Android
+
+on:
+  workflow_dispatch: # botón "Run workflow" en la pestaña Actions
+  push:
+    branches: [main]
+    paths:
+      - 'android/**'
+      - '.github/workflows/android-build.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-build
+  cancel-in-progress: true
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Crear keystore para firmar (generado en el CI)
+        run: |
+          keytool -genkeypair -v -keystore "$RUNNER_TEMP/volt.keystore" \
+            -storetype PKCS12 -alias volt -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass voltanalytics -keypass voltanalytics \
+            -dname "CN=VoltAnalytics, O=MagoPato, C=ES"
+          echo "ANDROID_KEYSTORE_PATH=$RUNNER_TEMP/volt.keystore" >> "$GITHUB_ENV"
+          echo "ANDROID_KEYSTORE_PASSWORD=voltanalytics" >> "$GITHUB_ENV"
+          echo "ANDROID_KEY_ALIAS=volt" >> "$GITHUB_ENV"
+          echo "ANDROID_KEY_PASSWORD=voltanalytics" >> "$GITHUB_ENV"
+
+      - name: Compilar APK release firmado
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleRelease
+          cp app/build/outputs/apk/release/app-release.apk ../VoltAnalytics.apk
+          ls -lh ../VoltAnalytics.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VoltAnalytics-apk
+          path: VoltAnalytics.apk
+          retention-days: 14
+
+      - name: Publicar en Releases (descarga directa)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: android-latest
+          name: VoltAnalytics Android (última compilación)
+          files: VoltAnalytics.apk
+          make_latest: false
+          overwrite_files: true

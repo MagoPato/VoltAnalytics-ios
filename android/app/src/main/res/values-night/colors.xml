@@ -1,0 +1,6 @@
+<resources>
+    <!-- Icono (versión oscura): fondo negro y logo blanco -->
+    <color name="icon_bg">#000000</color>
+    <color name="icon_logo_top">#FFFFFF</color>
+    <color name="icon_logo_bottom">#FFFFFF</color>
+</resources>

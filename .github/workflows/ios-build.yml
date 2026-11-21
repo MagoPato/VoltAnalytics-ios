@@ -4,6 +4,9 @@ on:
   workflow_dispatch: # botón "Run workflow" en la pestaña Actions
   push:
     branches: [main]
+    paths-ignore:
+      - 'android/**'
+      - '.github/workflows/android-build.yml'
 
 permissions:
   contents: write
