@@ -1,4 +1,4 @@
-name: VoltAnalytics
+﻿name: VoltAnalytics
 options:
   bundleIdPrefix: com.magopato
   deploymentTarget:
@@ -13,8 +13,8 @@ targets:
       path: Sources/Info.plist
       properties:
         CFBundleDisplayName: VoltAnalytics
-        CFBundleShortVersionString: "1.2.0"
-        CFBundleVersion: "4"
+        CFBundleShortVersionString: "1.2.1"
+        CFBundleVersion: "5"
         UILaunchScreen: {}
         UIUserInterfaceStyle: Dark
         UIRequiresFullScreen: false
