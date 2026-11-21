@@ -13,8 +13,8 @@ targets:
       path: Sources/Info.plist
       properties:
         CFBundleDisplayName: VoltAnalytics
-        CFBundleShortVersionString: "1.2.2"
-        CFBundleVersion: "6"
+        CFBundleShortVersionString: "1.3.0"
+        CFBundleVersion: "7"
         UILaunchScreen: {}
         UIUserInterfaceStyle: Dark
         UIRequiresFullScreen: false

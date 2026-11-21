@@ -18,12 +18,41 @@ final class WebModel: NSObject, ObservableObject, WKNavigationDelegate, WKUIDele
     @Published var errorText: String?
     let webView: WKWebView
 
+    // Estilo Spotify: la web pasa por detrás del reloj/batería y la barra superior
+    // se extiende hasta arriba con fondo translúcido desenfocado.
+    static let edgeToEdgeJS = """
+    (function () {
+      var vp = document.querySelector('meta[name=viewport]');
+      if (!vp) { vp = document.createElement('meta'); vp.name = 'viewport'; vp.content = 'width=device-width, initial-scale=1'; document.head.appendChild(vp); }
+      if (vp.content.indexOf('viewport-fit') === -1) vp.content += ', viewport-fit=cover';
+      var css = `
+        .topbar {
+          height: calc(var(--header-h, 52px) + env(safe-area-inset-top)) !important;
+          padding-top: env(safe-area-inset-top) !important;
+          background: rgba(10, 10, 10, 0.55) !important;
+          -webkit-backdrop-filter: saturate(180%) blur(24px);
+          backdrop-filter: saturate(180%) blur(24px);
+        }
+        .sidebar {
+          padding-top: env(safe-area-inset-top) !important;
+          padding-bottom: env(safe-area-inset-bottom) !important;
+        }
+      `;
+      var s = document.createElement('style');
+      s.id = 'app-edge-to-edge';
+      s.textContent = css;
+      (document.head || document.documentElement).appendChild(s);
+    })();
+    """
+
     override init() {
         let config = WKWebViewConfiguration()
         config.allowsInlineMediaPlayback = true
         config.mediaTypesRequiringUserActionForPlayback = []
         config.websiteDataStore = .default()
         config.preferences.javaScriptCanOpenWindowsAutomatically = true
+        config.userContentController.addUserScript(
+            WKUserScript(source: WebModel.edgeToEdgeJS, injectionTime: .atDocumentEnd, forMainFrameOnly: true))
         webView = WKWebView(frame: .zero, configuration: config)
         super.init()
 
@@ -129,7 +158,7 @@ struct ContentView: View {
         ZStack {
             BG.ignoresSafeArea()
             WebView(model: model)
-                .ignoresSafeArea(.container, edges: .bottom) // la web llega hasta el borde inferior
+                .ignoresSafeArea() // la web ocupa toda la pantalla (arriba y abajo)
 
             if let err = model.errorText {
                 BG.ignoresSafeArea()
