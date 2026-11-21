@@ -15,35 +15,20 @@ concurrency:
 jobs:
   build-ios:
     runs-on: macos-15
-    timeout-minutes: 60
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - name: Instalar dependencias
+      - name: Generar proyecto Xcode (XcodeGen)
         run: |
-          npm install
-          npx expo install --fix
-
-      - name: Generar proyecto nativo iOS
-        run: npx expo prebuild --platform ios --clean --no-install
-
-      - name: Instalar CocoaPods
-        working-directory: ios
-        run: pod install
+          brew install xcodegen
+          xcodegen generate
 
       - name: Compilar (sin firma)
-        working-directory: ios
         run: |
-          WORKSPACE=$(ls -d *.xcworkspace | head -1)
-          SCHEME=$(basename "$WORKSPACE" .xcworkspace)
-          echo "Workspace: $WORKSPACE  Scheme: $SCHEME"
           xcodebuild \
-            -workspace "$WORKSPACE" \
-            -scheme "$SCHEME" \
+            -project VoltAnalytics.xcodeproj \
+            -scheme VoltAnalytics \
             -configuration Release \
             -sdk iphoneos \
             -destination 'generic/platform=iOS' \
@@ -57,7 +42,7 @@ jobs:
       - name: Empaquetar .ipa
         run: |
           mkdir -p Payload
-          cp -R ios/build/Build/Products/Release-iphoneos/*.app Payload/
+          cp -R build/Build/Products/Release-iphoneos/VoltAnalytics.app Payload/
           zip -qry app-sin-firmar.ipa Payload
           ls -lh app-sin-firmar.ipa
 

@@ -1,6 +1,6 @@
-node_modules/
-ios/
-android/
-.expo/
+*.xcodeproj/
+build/
+Sources/Info.plist
+ipa/
 *.ipa
 Payload/

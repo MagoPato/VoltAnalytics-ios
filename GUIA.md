@@ -1,8 +1,10 @@
 # Tu web como app de iPhone (desde Windows, gratis)
 
 ## 0. Personaliza
-- `App.js` → cambia `WEB_URL` por la dirección de tu web.
-- `app.json` → cambia `name` (nombre bajo el ícono) y `bundleIdentifier` (algo único, ej. `com.tunombre.miweb`).
+- `Sources/VoltAnalyticsApp.swift` → cambia `WEB_URL` por la dirección de tu web.
+- `project.yml` → cambia `CFBundleDisplayName` (nombre bajo el ícono) y `PRODUCT_BUNDLE_IDENTIFIER`.
+
+La app es nativa en Swift (WKWebView, el mismo motor que Safari); GitHub Actions genera el proyecto con XcodeGen y compila sin firma.
 
 ## 1. Sube el proyecto a GitHub
 1. Crea un repositorio en github.com (público = minutos de Mac ilimitados; privado = cuota gratis limitada, los minutos de macOS cuentan x10).
